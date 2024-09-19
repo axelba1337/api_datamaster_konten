@@ -13,8 +13,6 @@ Jenis konten menentukan data tersebut ditampilkan di card News atau Advertisemen
 Jika jenis_konten=Ads, maka kolom yang muncul hanya title, konten, file pendukung, dan statusx`
 
 *Flow Data Master Konten*
-Saya paham. Berikut adalah struktur penjelasan alur dan entitas berdasarkan flow chart yang Anda berikan sebelumnya:
-
 1. Start
    - Alur dimulai ketika pengguna mengakses sistem
 
@@ -66,6 +64,7 @@ Rangkuman:
         authorization-403.js
 	/helpers
 	/middlewares
+		validateSchema.js
 	/models
 		konten-model.js
 	/repositories
@@ -76,6 +75,8 @@ Rangkuman:
 	/seeders
 	/services
 		konten-service.js
+	/utils
+		epoch.js
 	/validations
 		konten-validation.js
 server.js
@@ -127,3 +128,6 @@ Reliability (optional)
 
 Performance and supportability (optional)
 -
+
+*Additional Notes*
+Alasan data masih ada meskipun sudah di-delete melalui POSTMAN adalah karena kita menggunakan metode soft delete dengan mengisi kolom deletedAt dengan epoch timestamp, bukan menghapus secara fisik dari database. Soft delete adalah teknik yang tidak benar-benar menghapus data dari database, melainkan menandai data sebagai "terhapus" dengan mengisi kolom tertentu (deletedAt) dengan waktu penghapusan. Data ini masih ada di database, tetapi dianggap "terhapus".

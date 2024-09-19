@@ -9,8 +9,12 @@ export default class KontenService {
         return await kontenRepository.getAll();
     }
 
-    static async getById(id) {
-        return await kontenRepository.getById(id);
+    // static async getById(id) {
+    //     return await kontenRepository.getById(id);
+    // }
+
+    static async getByUuid(uuid) {
+        return await kontenRepository.getByUuid(uuid);
     }
 
     static async update(id, kontenData) {
@@ -18,6 +22,28 @@ export default class KontenService {
     }
 
     static async delete(id) {
-        return await kontenRepository.delete(id);
+        const konten = await kontenRepository.getById(id);
+        if (!konten) return null; // Jika tidak ditemukan
+
+        konten.deletedAt = Math.floor(Date.now() / 1000);
+        await konten.save();
+        return konten;
     }
+
+    // static async hardDelete(id) {
+    //     const konten = await kontenRepository.getById(id);
+    //     if (!konten) return null; // Jika tidak ditemukan
+
+    //     await konten.destroy(); // Menghapus konten dari database
+    //     return konten;
+    // }
+
+    // static async deleteAll() {
+    //     const kontenList = await this.getAll();
+    //     for (let konten of kontenList) {
+    //         konten.deletedAt = Math.floor(Date.now() / 1000);
+    //         await konten.save();
+    //     }
+    //     return kontenList.length; // Kembalikan jumlah konten yang dihapus
+    // }
 }

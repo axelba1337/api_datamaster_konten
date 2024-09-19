@@ -13,6 +13,12 @@ export default class KontenRepository {
         return await Konten.findByPk(id);
     }
 
+    static async getByUuid(uuid) {
+        return await Konten.findOne({
+            where: { uuid: uuid } // Cari berdasarkan UUID string
+        });
+    }
+
     static async update(id, kontenData) {
         const konten = await Konten.findByPk(id);
         if (!konten) {

@@ -1,10 +1,10 @@
 import { z } from "zod";
 
 const kontenSchema = z.object({
-    uuid: z.string().uuid(),
+    // uuid: z.string().uuid(),
     title: z.string().min(1, "Title is required"),
     jenis_konten: z.enum(["0", "1"], {
-        errorMap: () => ({ message: "jenis_konten must be either '0' for News or '1' for Advertisement" })
+        errorMap: () => ({ message: "jenis_konten harus antara '0' untuk News atau '1' untuk Advertisement" })
     }),
     meta_description: z.string().optional(),
     file: z.string().optional(),
@@ -18,7 +18,7 @@ const kontenSchema = z.object({
     if (data.jenis_konten === "0" && !data.konten) {
         ctx.addIssue({
             path: ["konten"],
-            message: "Content is required for News type",
+            message: "Content butuh untuk News type",
         });
     }
 
@@ -26,7 +26,7 @@ const kontenSchema = z.object({
     if (data.jenis_konten === "1" && (!data.url || !/^(https?:\/\/[^\s/$.?#].[^\s]*)$/i.test(data.url))) {
         ctx.addIssue({
             path: ["url"],
-            message: "URL is required and must be valid for Advertisement type",
+            message: "URL butuh dan harus valid untuk Advertisement type",
         });
     }
 });
